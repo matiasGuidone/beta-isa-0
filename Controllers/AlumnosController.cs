@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using beta_isa_0.Context;
+using beta_isa_0.Models;
 
 namespace beta_isa_0.Controllers
 {
@@ -11,36 +14,97 @@ namespace beta_isa_0.Controllers
     [ApiController]
     public class AlumnosController : ControllerBase
     {
+        private readonly AlumnoContext _context;
+
+        public AlumnosController(AlumnoContext context)
+        {
+            _context = context;
+        }
+
         // GET: api/Alumnos
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<ActionResult<IEnumerable<Alumno>>> GetAlumnos()
         {
-            return new string[] { "value1", "value2" };
+            return await _context.Alumnos.ToListAsync();
         }
 
         // GET: api/Alumnos/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Alumno>> GetAlumno(int id)
         {
-            return "value";
-        }
+            var alumno = await _context.Alumnos.FindAsync(id);
 
-        // POST: api/Alumnos
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
+            if (alumno == null)
+            {
+                return NotFound();
+            }
+
+            return alumno;
         }
 
         // PUT: api/Alumnos/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task<IActionResult> PutAlumno(int id, Alumno alumno)
         {
+            if (id != alumno.Id)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(alumno).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AlumnoExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // POST: api/Alumnos
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for
+        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [HttpPost]
+        public async Task<ActionResult<Alumno>> PostAlumno(Alumno alumno)
         {
+            _context.Alumnos.Add(alumno);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetAlumno", new { id = alumno.Id }, alumno);
+        }
+
+        // DELETE: api/Alumnos/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Alumno>> DeleteAlumno(int id)
+        {
+            var alumno = await _context.Alumnos.FindAsync(id);
+            if (alumno == null)
+            {
+                return NotFound();
+            }
+
+            _context.Alumnos.Remove(alumno);
+            await _context.SaveChangesAsync();
+
+            return alumno;
+        }
+
+        private bool AlumnoExists(int id)
+        {
+            return _context.Alumnos.Any(e => e.Id == id);
         }
     }
 }
