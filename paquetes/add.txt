@@ -5,11 +5,15 @@ dotnet add package Pomelo.EntityFrameworkCore.MySql
 dotnet add package Microsoft.EntityFrameworkCore.Relational
 dotnet add package Microsoft.EntityFrameworkCore
 
-//migracion
+//migracion- esto es para crear la tabla en la base apartir de la clase de entidad que creas
 dotnet tool install --global dotnet-ef
 dotnet add package Microsoft.EntityFrameworkCore.Design
 dotnet ef migrations add InitialCreate
 dotnet ef database update
 
+//Son paquetes que me faltaban
 dotnet tool install --global dotnet-aspnet-codegenerator --version 3.1.3
 dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+
+//para generar un controlador
+dotnet aspnet-codegenerator controller -name AlumnosController -api -actions -outDir Controllers
