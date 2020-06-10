@@ -17,3 +17,7 @@ dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
 
 //para generar un controlador
 dotnet aspnet-codegenerator controller -m Alumno -name AlumnosController -api -dc AlumnoContext -actions -outDir Controllers
+
+//agregar clases a la base
+
+dotnet ef migrations add Docente

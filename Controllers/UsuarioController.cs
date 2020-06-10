@@ -12,48 +12,48 @@ namespace beta_isa_0.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AlumnosController : ControllerBase
+    public class UsuarioController : ControllerBase
     {
         private readonly AlumnoContext _context;
 
-        public AlumnosController(AlumnoContext context)
+        public UsuarioController(AlumnoContext context)
         {
             _context = context;
         }
 
-        // GET: api/Alumnos
+        // GET: api/Usuario
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Alumno>>> GetAlumnos()
+        public async Task<ActionResult<IEnumerable<Usuario>>> GetUsuarios()
         {
-            return await _context.Alumnos.ToListAsync();
+            return await _context.Usuarios.ToListAsync();
         }
 
-        // GET: api/Alumnos/5
+        // GET: api/Usuario/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Alumno>> GetAlumno(int id)
+        public async Task<ActionResult<Usuario>> GetUsuario(int id)
         {
-            var alumno = await _context.Alumnos.FindAsync(id);
+            var usuario = await _context.Usuarios.FindAsync(id);
 
-            if (alumno == null)
+            if (usuario == null)
             {
                 return NotFound();
             }
 
-            return alumno;
+            return usuario;
         }
 
-        // PUT: api/Alumnos/5
+        // PUT: api/Usuario/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAlumno(int id, Alumno alumno)
+        public async Task<IActionResult> PutUsuario(int id, Usuario usuario)
         {
-            if (id != alumno.Id)
+            if (id != usuario.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(alumno).State = EntityState.Modified;
+            _context.Entry(usuario).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace beta_isa_0.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AlumnoExists(id))
+                if (!UsuarioExists(id))
                 {
                     return NotFound();
                 }
@@ -74,36 +74,37 @@ namespace beta_isa_0.Controllers
             return NoContent();
         }
 
-        // POST: api/Alumnos
+        // POST: api/Usuario
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Alumno>> PostAlumno(Alumno alumno)
+        public async Task<ActionResult<Usuario>> PostUsuario(Usuario usuario)
         {
-            _context.Alumnos.Add(alumno);
+            _context.Usuarios.Add(usuario);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAlumno", new { id = alumno.Id }, alumno);
+            return CreatedAtAction("GetUsuario", new { id = usuario.Id }, usuario);
         }
 
-        // DELETE: api/Alumnos/5
+        // DELETE: api/Usuario/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Alumno>> DeleteAlumno(int id)
+        public async Task<ActionResult<Usuario>> DeleteUsuario(int id)
         {
-            var alumno = await _context.Alumnos.FindAsync(id);
-            if (alumno == null)
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario == null)
             {
                 return NotFound();
             }
 
-            _context.Alumnos.Remove(alumno);
+            _context.Usuarios.Remove(usuario);
             await _context.SaveChangesAsync();
 
-            return alumno;
+            return usuario;
         }
-        private bool AlumnoExists(int id)
+
+        private bool UsuarioExists(int id)
         {
-            return _context.Alumnos.Any(e => e.Id == id);
+            return _context.Usuarios.Any(e => e.Id == id);
         }
     }
 }

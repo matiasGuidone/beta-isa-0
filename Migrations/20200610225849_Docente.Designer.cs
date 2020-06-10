@@ -8,8 +8,8 @@ using beta_isa_0.Context;
 namespace beta_isa_0.Migrations
 {
     [DbContext(typeof(AlumnoContext))]
-    [Migration("20200604001105_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20200610225849_Docente")]
+    partial class Docente
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -39,6 +39,40 @@ namespace beta_isa_0.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Alumnos");
+                });
+
+            modelBuilder.Entity("beta_isa_0.Models.Docente", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Apellido")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Docentes");
+                });
+
+            modelBuilder.Entity("beta_isa_0.Models.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Clave")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuarios");
                 });
 #pragma warning restore 612, 618
         }

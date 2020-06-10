@@ -6,10 +6,12 @@ namespace beta_isa_0.Context
     public class AlumnoContext : DbContext
     {
           public DbSet<Alumno> Alumnos { get; set; }
-
+          public DbSet<Usuario> Usuarios { get;set;}
+           public DbSet<Docente> Docentes { get;set;}
           public AlumnoContext(DbContextOptions<AlumnoContext> options) : base(options){
 
                         }
+
         //   private static string cadena()
         // {
         //     XmlTextReader reader = new XmlTextReader("./conexion.xml");
